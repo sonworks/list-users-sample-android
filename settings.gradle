@@ -16,3 +16,4 @@ rootProject.name = "ListUsersSample"
 include ':app'
 include ':repository'
 include ':api'
+include ':model'
