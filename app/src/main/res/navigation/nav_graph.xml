@@ -20,5 +20,10 @@
         android:id="@+id/userDetailFragment"
         android:name="com.example.listuserssample.UserDetailFragment"
         android:label="UserDetailFragment"
-        tools:layout="@layout/fragment_user_detail" />
+        tools:layout="@layout/fragment_user_detail">
+
+        <argument
+            android:name="user_name"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.listuserssample.databinding.FragmentUserDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UserDetailFragment : Fragment() {
+
+    private val args: UserDetailFragmentArgs by navArgs()
 
     private var _binding: FragmentUserDetailBinding? = null
     private val binding
