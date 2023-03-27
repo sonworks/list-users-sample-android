@@ -1,3 +1,10 @@
 package com.example.repository
 
-interface UserRepository
+import com.example.model.User
+
+interface UserRepository {
+
+    suspend fun getUserList(): List<User>
+
+    suspend fun getUserDetail(loginId: String): User
+}

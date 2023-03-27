@@ -34,8 +34,11 @@ android {
 
 dependencies {
 
+    implementation project(":model")
     implementation project(":api")
 
     implementation "com.google.dagger:hilt-android:2.45"
     kapt "com.google.dagger:hilt-compiler:2.45"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.6.4"
 }
