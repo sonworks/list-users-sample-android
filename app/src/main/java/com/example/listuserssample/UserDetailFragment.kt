@@ -5,13 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.listuserssample.databinding.FragmentUserDetailBinding
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserDetailFragment : Fragment() {
+
+    private val viewModel: UserDetailViewModel by viewModels()
 
     private val args: UserDetailFragmentArgs by navArgs()
 
@@ -30,8 +36,19 @@ class UserDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backButton.setOnClickListener {
-            findNavController().popBackStack()
+
+        viewModel.userDetail.observe(viewLifecycleOwner) { user ->
+            Picasso.get().load(user.avatarUrl).into(binding.userImageView)
+            binding.userNameTextView.text = user.name
+            binding.loginIdTextView.text = user.login
+            binding.companyTextView.text = user.company
+            binding.locationTextView.text = user.location
+            binding.linkTextView.text = user.blog
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val login = args.userName
+            viewModel.getUserDetail(login)
         }
     }
 
