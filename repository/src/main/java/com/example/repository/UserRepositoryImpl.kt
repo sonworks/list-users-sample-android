@@ -9,8 +9,13 @@ class UserRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : UserRepository {
 
+    companion object {
+        private const val GITHUB_ACCESS_TOKEN = "" // FIXME 'Bearer xxxxxx'
+    }
+
     override suspend fun getUserList(): List<User> {
-        val response = apiService.getUserList().await()
+        val authorization = GITHUB_ACCESS_TOKEN.ifBlank { null }
+        val response = apiService.getUserList(authorization).await()
         return response.map {
             User(
                 login = it.login,
@@ -20,7 +25,8 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserDetail(loginId: String): User {
-        val response = apiService.getUserDetail(loginId).await()
+        val authorization = GITHUB_ACCESS_TOKEN.ifBlank { null }
+        val response = apiService.getUserDetail(authorization, loginId).await()
         return User(
             login = response.login,
             avatarUrl = response.avatarUrl,
