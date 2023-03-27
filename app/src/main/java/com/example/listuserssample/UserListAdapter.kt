@@ -13,6 +13,16 @@ class UserListAdapter :
 
     private val data = mutableListOf<User>()
 
+    private lateinit var listener: OnUserItemClickListener
+
+    interface OnUserItemClickListener {
+        fun onItemClick(user: User)
+    }
+
+    fun setOnUserItemClickListener(listener: OnUserItemClickListener) {
+        this.listener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = UserListItemBinding.inflate(inflater, parent, false)
@@ -41,6 +51,9 @@ class UserListAdapter :
         fun bind(user: User) {
             Picasso.get().load(user.avatarUrl).into(binding.imageView)
             binding.textView.text = user.login
+            binding.userListItemLayout.setOnClickListener {
+                listener.onItemClick(user)
+            }
         }
     }
 }

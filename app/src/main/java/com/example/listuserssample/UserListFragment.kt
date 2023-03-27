@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listuserssample.databinding.FragmentUserListBinding
+import com.example.model.User
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +40,12 @@ class UserListFragment : Fragment() {
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         val adapter = UserListAdapter()
         binding.userListView.adapter = adapter
+        adapter.setOnUserItemClickListener(
+            object : UserListAdapter.OnUserItemClickListener {
+                override fun onItemClick(user: User) {
+                }
+            }
+        )
 
         viewModel.userList.observe(viewLifecycleOwner) {
             lifecycleScope.launch {
